@@ -4,10 +4,13 @@ import './styles.css';
 import { CalendarApp } from './CalendarApp.jsx';
 import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter >
-      <CalendarApp />
-    </BrowserRouter>
-  </React.StrictMode>,
+const root = document.getElementById('root');
+const rootElement = (
+  // <React.StrictMode>
+  <BrowserRouter>
+    <CalendarApp />
+  </BrowserRouter>
+  // </React.StrictMode>
 );
+
+ReactDOM.createRoot(root).render(rootElement);
