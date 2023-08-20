@@ -42,8 +42,15 @@
 .fab {
   border-radius: 50%;
   bottom: 20px;
-  font-size: 20px;
-  padding: 20px;
+  padding: 13px;
   position: fixed;
   right: 20px;
+}
+
+.fab-danger {
+  border-radius: 100%;
+  bottom: 20px;
+  font-size: 20px;
+  position: fixed;
+  left: 20px;
 }
