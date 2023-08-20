@@ -7,6 +7,7 @@ import es from 'date-fns/locale/es';
 import { differenceInSeconds } from 'date-fns/esm';
 import Swal from 'sweetalert2';
 import "sweetalert2/dist/sweetalert2.min.css";
+import { useUiStore } from '../../hooks/useUiStore';
 
 registerLocale('es', es);
 
@@ -23,8 +24,8 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
+  const { isDateModalOpen, closeDateModal } = useUiStore();
   const [ formSubmitted, setFormSubmitted ] = useState(false);
-  const [ isOpen, setIsOpen ] = useState(true);
   const [ formValues, setFormValues ] = useState({
     title: 'Argiro',
     notes: 'Realizar una carga de carga de argiro',
@@ -54,7 +55,13 @@ export const CalendarModal = () => {
   };
 
   const onCloseModal = () => {
-    setIsOpen(false);
+    closeDateModal();
+    setFormValues({
+      title: '',
+      notes: '',
+      start: new Date(),
+      end: addHours(new Date(), 2),
+    });
   };
 
   const onSubmit = (event) => {
@@ -74,7 +81,7 @@ export const CalendarModal = () => {
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={isDateModalOpen}
       onRequestClose={onCloseModal}
       style={customStyles}
       className={'modal'}
