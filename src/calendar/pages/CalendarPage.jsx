@@ -7,23 +7,25 @@ import { CalendarEvent } from "../components/CalendarEvent";
 import { useState } from "react";
 import { CalendarModal } from "../components/CalendarModal";
 import { useUiStore } from "../../hooks/useUiStore";
+import { useCalendarStore } from "../../hooks/useCalendarStore";
 
-const myEventsList = [
-  {
-    title: "Meeting",
-    notes: "Meeting with the team",
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgColor: "#fafafa",
-    user: {
-      _id: "123",
-      name: "Fernando",
-    }
-  },
-];
+// const myEventsList = [
+//   {
+//     title: "Meeting",
+//     notes: "Meeting with the team",
+//     start: new Date(),
+//     end: addHours(new Date(), 2),
+//     bgColor: "#fafafa",
+//     user: {
+//       _id: "123",
+//       name: "Fernando",
+//     }
+//   },
+// ];
 
 export const CalendarPage = () => {
   const { openDateModal } = useUiStore();
+  const { events, setActiveEvent } = useCalendarStore();
   const [ lastView, setLastView ] = useState(localStorage.getItem('lastView') || 'week');
 
   const eventStyleGetter = (event, start, end, isSelected) => {
@@ -56,7 +58,7 @@ export const CalendarPage = () => {
         culture="es"
         localizer={localizer}
         defaultView={lastView}
-        events={myEventsList}
+        events={events}
         startAccessor={'end'}
         style={{ height: '80vh' }}
         messages={getMessagesEs()}
