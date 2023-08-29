@@ -12,7 +12,7 @@ export const useAuthStore = () => {
   const dispatch = useDispatch();
 
   const startLogin = async (email, password) => {
-    console.log({ email, password });
+    // console.log({ email, password });
 
     dispatch(onChecking());
     try {
@@ -20,10 +20,27 @@ export const useAuthStore = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("token-init-date", new Date().getTime());
       dispatch(onLogin({ name: data.name, uid: data.uid }));
-
-      console.log({ resp });
     } catch (error) {
       dispatch(onLogout("Credenciales incorrectas"));
+      setTimeout(() => {
+        dispatch(clearErrorMessage());
+      }, 100);
+    }
+  };
+
+  const startRegister = async ({ email, password, name }) => {
+    dispatch(onChecking());
+    try {
+      const { data } = await calendarApi.post("/auth/new", {
+        email,
+        password,
+        name,
+      });
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("token-init-date", new Date().getTime());
+      dispatch(onLogin({ name: data.name, uid: data.uid }));
+    } catch (error) {
+      dispatch(onLogout(error.response.data?.msg || error.message));
       setTimeout(() => {
         dispatch(clearErrorMessage());
       }, 100);
@@ -36,5 +53,6 @@ export const useAuthStore = () => {
     errorMessage,
     // Method
     startLogin,
+    startRegister,
   };
 };
