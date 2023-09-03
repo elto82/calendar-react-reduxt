@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import "sweetalert2/dist/sweetalert2.min.css";
 import { useUiStore } from '../../hooks/useUiStore';
 import { useCalendarStore } from '../../hooks/useCalendarStore';
+import { getEnvVariables } from '../../helpers/getEnvVariables';
 
 registerLocale('es', es);
 
@@ -22,7 +23,9 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
   }
 };
-Modal.setAppElement('#root');
+if (getEnvVariables().VITE_MODE !== 'test') {
+  Modal.setAppElement('#root');
+}
 
 export const CalendarModal = () => {
   const { activeEvent, startSavingEvent } = useCalendarStore();
